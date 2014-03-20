@@ -1,6 +1,10 @@
 package com.me.gameEri;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -12,15 +16,41 @@ public class GameEriRenderer implements Disposable{
 	private GameEriController gameController;//recibir el gameControler a traves del constructor
 	
 	
-	
+	//objetos graficos
+	private Pixmap plataforma;
+	//creamos la textura
+	private Texture textura;
+	//Cramos el Sprite, describe tanto la textura como la geometria
+	private Sprite sprite;
 	
 	public GameEriRenderer(GameEriController gC) {
-		// TODO Auto-generated constructor stub
+		//Llamamos al inicializador dentro del constructor
+		init();
 	}
 	//Generamos metodos
-	private void init(){}
-	public void render(){}
-	public void resize(int width, int height){}//metodo propio de los dispositivos moviles
+	private void init(){
+		//Crear nuetsra plataforma
+		
+		plataforma=new Pixmap (32, 32, Format.RGBA8888 );
+		plataforma.setColor(1,0,0,0.5f);
+		plataforma.fill();//Rellenar
+		
+		//necesitamos ponerlo en memoria vamos a pintar a traves de una textura - Cargar textura
+		//entre parentsis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma
+		textura=new Texture(plataforma);
+		sprite=new Sprite();
+		
+	}
+	public void render(){
+		
+	}
+	//metodo propio de los dispositivos moviles
+	public void resize(int width, int height){
+		
+	}
 	@Override
-	public void dispose(){}//metodo para la liberacion de los recursos
+	//metodo para la liberacion de los recursos
+	public void dispose(){
+		
+	}
 }
