@@ -17,11 +17,13 @@ public class GameEriRenderer implements Disposable{
 	
 	
 	//objetos graficos
+	//Un mapa de puntos representa una imagen en la memoria.
+	//Tiene una anchura y altura expresada en píxeles
 	private Pixmap plataforma;
 	//creamos la textura
 	private Texture textura;
-	//Cramos el Sprite, describe tanto la textura como la geometria
-	private Sprite sprite;
+	//Creamos el Sprite, describe tanto la textura como la geometria, es como otro envoltorio dentro de la textura
+	private Sprite sprite; 
 	
 	public GameEriRenderer(GameEriController gC) {
 		//Llamamos al inicializador dentro del constructor
@@ -29,27 +31,51 @@ public class GameEriRenderer implements Disposable{
 	}
 	//Generamos metodos
 	private void init(){
-		//Crear nuetsra plataforma
+		//---------------Camara de visión-------------------------
+		//creamos una nueva OrthographicCamera
+		camera=new OrthographicCamera(480,320);//hacemos que nuestra camara coja todo el escenario(en main esta el tamaño)
+		//la  situo en la posicion 000
+		camera.position.set(0,0,0);
+		//Actualizare la misma
+		camera.update();
+		
+		//------------------Escenario, es el q va a pintar viene representado por batch(lote,grupo)
+		//Creo un nuevo batch
+		batch=new SpriteBatch();
+		
+		//------------------Crear nuestra plataforma------------------
 		
 		plataforma=new Pixmap (32, 32, Format.RGBA8888 );
 		plataforma.setColor(1,0,0,0.5f);
 		plataforma.fill();//Rellenar
 		
 		//necesitamos ponerlo en memoria vamos a pintar a traves de una textura - Cargar textura
-		//entre parentsis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma
+		//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
 		textura=new Texture(plataforma);
-		sprite=new Sprite();
+		//sprite=new Sprite();//utilizare el escenario batch para q dibuje el texture
 		
 	}
+	
+	
+	//----------------------Metodo Render para empezar a pintar
 	public void render(){
+		batch.setProjectionMatrix(camera.combined);
+		
+		//Todo lo que vayamos a pintar tiene que entar en medio de nuestro batch begin nuestro escenario y batch.end el final, todo lo que haya hay se ira actualizando y repintando
+		batch.begin();
+			//vamos a pintar nuestro sprite y vamos a  dibujar el cuadrado, ahora cambio sprite x batch utilizare el escenario batch para q dibuje el texture
+			batch.draw(textura,0,0);
+		
+		batch.end();
+		
 		
 	}
-	//metodo propio de los dispositivos moviles
+	//----------------------metodo propio de los dispositivos moviles
 	public void resize(int width, int height){
 		
 	}
 	@Override
-	//metodo para la liberacion de los recursos
+	//----------------------metodo para la liberacion de los recursos
 	public void dispose(){
 		
 	}
