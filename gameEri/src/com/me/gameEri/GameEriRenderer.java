@@ -13,21 +13,18 @@ public class GameEriRenderer implements Disposable{
 	//necesitamos una camara ortogonal, perpendicular a la zona de pintar de los graficos
 	private OrthographicCamera camera;
 	private SpriteBatch batch;//controlador del espacio donde se pinte
-	private GameEriController gameController;//recibir el gameControler a traves del constructor
+	private GameEriController gC;//recibir el gameControler a traves del constructor, cambio gameController por gC
 	
 	
 	//objetos graficos
-	//Un mapa de puntos representa una imagen en la memoria.
-	//Tiene una anchura y altura expresada en píxeles
-	private Pixmap plataforma;
-	//creamos la textura
-	private Texture textura;
+	
 	//Creamos el Sprite, describe tanto la textura como la geometria, es como otro envoltorio dentro de la textura
-	private Sprite sprite; 
+	//private Sprite sprite; //dejo comentado por que no lo voy a utilizar voya usar un batch
 	
 	public GameEriRenderer(GameEriController gC) {
 		//Llamamos al inicializador dentro del constructor
 		init();
+		this.gC=gC;//al hacer this es para utilizar todos los metodos y atributos de esta clase
 	}
 	//Generamos metodos
 	private void init(){
@@ -43,23 +40,9 @@ public class GameEriRenderer implements Disposable{
 		//Creo un nuevo batch
 		batch=new SpriteBatch();
 		
-		//------------------Crear nuestra plataforma------------------
-		
-		plataforma=new Pixmap (32, 32, Format.RGBA8888 );
-		plataforma.setColor(1,0,0,0.5f);
-		plataforma.fill();//Rellenar por completo la plataforma
-		plataforma.setColor(1,1,0,1);
-		plataforma.drawLine(0, 0, 32, 32);//dibujar una linea
-		plataforma.drawLine(32, 0, 0, 32);
-		plataforma.setColor(0,1,1,1);//le doy otro color
-		plataforma.drawRectangle(0,0,32,32);
 		
 		
-		//necesitamos ponerlo en memoria vamos a pintar a traves de una textura - Cargar textura
-		//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
-		textura=new Texture(plataforma);
-		plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
-		//sprite=new Sprite();//utilizare el escenario batch para q dibuje el texture
+		
 		
 	}
 	
@@ -71,7 +54,7 @@ public class GameEriRenderer implements Disposable{
 		//Todo lo que vayamos a pintar tiene que entar en medio de nuestro batch begin nuestro escenario y batch.end el final, todo lo que haya hay se ira actualizando y repintando
 		batch.begin();
 			//vamos a pintar nuestro sprite y vamos a  dibujar el cuadrado, ahora cambio sprite x batch utilizare el escenario batch para q dibuje el texture
-			batch.draw(textura,0,0);
+			batch.draw(gC.textura,0,0);
 		
 		batch.end();
 		
