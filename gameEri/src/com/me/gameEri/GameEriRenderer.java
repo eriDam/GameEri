@@ -47,11 +47,18 @@ public class GameEriRenderer implements Disposable{
 		
 		plataforma=new Pixmap (32, 32, Format.RGBA8888 );
 		plataforma.setColor(1,0,0,0.5f);
-		plataforma.fill();//Rellenar
+		plataforma.fill();//Rellenar por completo la plataforma
+		plataforma.setColor(1,1,0,1);
+		plataforma.drawLine(0, 0, 32, 32);//dibujar una linea
+		plataforma.drawLine(32, 0, 0, 32);
+		plataforma.setColor(0,1,1,1);//le doy otro color
+		plataforma.drawRectangle(0,0,32,32);
+		
 		
 		//necesitamos ponerlo en memoria vamos a pintar a traves de una textura - Cargar textura
 		//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
 		textura=new Texture(plataforma);
+		plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
 		//sprite=new Sprite();//utilizare el escenario batch para q dibuje el texture
 		
 	}
