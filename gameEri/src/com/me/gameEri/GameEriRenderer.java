@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
 
 //Parte q controla la parte de vision la parte mas grafica
 public class GameEriRenderer implements Disposable{
-	//necesitamos una camara ortogonal, perpendicular a la zona de pintar de los graficos
+	//Todo necesita una camara, necesitamos una camara ortogonal, perpendicular a la zona de pintar de los graficos, si da error importar la libreria d clase
 	private OrthographicCamera camera;
 	private SpriteBatch batch;//controlador del espacio donde se pinte
 	private GameEriController gC;//recibir el gameControler a traves del constructor, cambio gameController por gC
@@ -39,11 +39,7 @@ public class GameEriRenderer implements Disposable{
 		//------------------Escenario, es el q va a pintar viene representado por batch(lote,grupo)
 		//Creo un nuevo batch
 		batch=new SpriteBatch();
-		
-		
-		
-		
-		
+	
 	}
 	
 	
@@ -54,8 +50,9 @@ public class GameEriRenderer implements Disposable{
 		//Todo lo que vayamos a pintar tiene que entar en medio de nuestro batch begin nuestro escenario y batch.end el final, todo lo que haya hay se ira actualizando y repintando
 		batch.begin();
 			//vamos a pintar nuestro sprite y vamos a  dibujar el cuadrado, ahora cambio sprite x batch utilizare el escenario batch para q dibuje el texture
-			batch.draw(gC.textura,0,0);
-		
+			//batch.draw(gC.textura,0,0);
+			//Como he cambiado en controller y he indicado q pinte el cubo
+			gC.cube.draw(batch);
 		batch.end();
 		
 		
