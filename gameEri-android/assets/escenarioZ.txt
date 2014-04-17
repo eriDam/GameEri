@@ -1,0 +1,53 @@
+escenarioZ.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+H1
+  rotate: true
+  xy: 504, 280
+  size: 80, 112
+  orig: 176, 208
+  offset: 48, 48
+  index: -1
+tile-1b
+  rotate: false
+  xy: 2, 2
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: -1
+z1
+  rotate: true
+  xy: 504, 88
+  size: 82, 118
+  orig: 176, 208
+  offset: 56, 47
+  index: -1
+z11
+  rotate: false
+  xy: 504, 428
+  size: 86, 68
+  orig: 176, 208
+  offset: 45, 71
+  index: -1
+z2
+  rotate: true
+  xy: 504, 2
+  size: 84, 120
+  orig: 176, 208
+  offset: 45, 45
+  index: -1
+z3
+  rotate: false
+  xy: 504, 172
+  size: 112, 106
+  orig: 176, 208
+  offset: 32, 52
+  index: -1
+z4
+  rotate: true
+  xy: 504, 362
+  size: 64, 106
+  orig: 176, 208
+  offset: 55, 51
+  index: -1

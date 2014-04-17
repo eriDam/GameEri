@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 
 	//Creo esta 1 clase q va a ser la encargada de control, toda la parte logica del juego
 	
@@ -18,7 +20,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 		public Texture textura,textura2,textura3;//Creo mas texturas para dibujar, asi veremos el efecto de nuestro cubo al moverse
 		//El Sprite nos permite incorporar movimiento y hacer ocsas que una textura no nos permite hacer
 		public Sprite cube,platStatic1,platStatic2;//añado como ejemplo 
-		public GameEriCamera gcCamera;//Creamos un nuevo 
+		public GameEriCamera gcCamera;//Creamos un nuevo
+		public TextureAtlas spriteSheet;//la hoja con toda la grafica y es un objeto de tipo textureAtlas, que se debe de importar
+		public Array<Sprite> objetos;//Creamos un array dinamico de tipo sprite para cargar aqui los graficos
 	
 	public GameEriController() {
 		init();
@@ -28,7 +32,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 	//nuevo metodo q podre usar para resetear el anterior
 	public void init(){
 		this.initPlataformas();//cuando utilizo this es para indicarle q utilizo todos los atributos y metodos de esta clase
-		//Creamos el objeto despues del cubo
+		//Creamos camera el objeto despues del cubo
 		gcCamera= new GameEriCamera();//y nos vamos a GameEriCamera
 		//Le pasamos el objeto creado en GameEriCamera
 		gcCamera.setSprite(cube);
@@ -54,7 +58,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 	/*-------------------Creamos para ordenar el codigo--------------------
 	 *-----------Crea y coloca el cubo ----*/
 	private void initPlataformas(){
-				//Crear nuestra plataforma------------------
+		//INICIALIZAMOS PAQUETE
+		spriteSheet=new TextureAtlas("escenarioZ.txt");
+		objetos=spriteSheet.createSprites();
+		//Crear nuestra plataforma------------------
 				plataforma=new Pixmap (32, 32, Format.RGBA8888 );
 				plataforma.setColor(1,0,0,0.5f);
 				plataforma.fill();//Rellenar por completo la plataforma
@@ -70,8 +77,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 				//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
 				textura=new Texture(plataforma);
 				//vamos a cargar dentro de nuestro cubo la textura y lo vamos a posicionar
-				cube=new Sprite(textura);//Ir a Renderer y cambiar que ya no este pintando la textura si no el cubo
-				cube.setPosition(0, 0);//
+				//cube=new Sprite(textura);//Ir a Renderer y cambiar que ya no este pintando la textura si no el cubo
+				//cube.setPosition(0, 0);//
+				cube=objetos.get(1);
+				cube.setPosition(0, 0);
 				plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
 				//sprite=new Sprite(textura);//utilizare el escenario batch para q dibuje el texture
 				
@@ -130,8 +139,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 					textura2=new Texture(plataforma);
 					platStatic1=new Sprite (textura2);
 					//vamos a cargar dentro de nuestro cubo la textura y lo vamos a posicionar
-					 
 					platStatic1.setPosition(-100, 0);//colocamos a la izquierda
+					
 					plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
 					
 					//2estatico

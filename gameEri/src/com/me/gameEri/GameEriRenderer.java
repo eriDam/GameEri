@@ -53,10 +53,14 @@ public class GameEriRenderer implements Disposable{
 			//vamos a pintar nuestro sprite y vamos a  dibujar el cuadrado, ahora cambio sprite x batch utilizare el escenario batch para q dibuje el texture
 			//batch.draw(gC.textura,0,0);
 			//Como he cambiado en controller y he indicado q pinte el cubo
+//	comento para usar mi escenario
+//			gC.cube.draw(batch);
+			
+			gC.objetos.get(0).draw(batch);
 			gC.cube.draw(batch);
 			gC.platStatic1.draw(batch);
 			gC.platStatic2.draw(batch);
-		batch.end();
+			batch.end();
 		
 		
 	}
