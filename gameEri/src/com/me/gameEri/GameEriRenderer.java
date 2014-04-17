@@ -46,13 +46,16 @@ public class GameEriRenderer implements Disposable{
 	//----------------------Metodo Render para empezar a pintar
 	public void render(){
 		batch.setProjectionMatrix(camera.combined);
-		
+		//pintamos la camara
+		gC.gcCamera.moverCamera(camera);
 		//Todo lo que vayamos a pintar tiene que entar en medio de nuestro batch begin nuestro escenario y batch.end el final, todo lo que haya hay se ira actualizando y repintando
 		batch.begin();
 			//vamos a pintar nuestro sprite y vamos a  dibujar el cuadrado, ahora cambio sprite x batch utilizare el escenario batch para q dibuje el texture
 			//batch.draw(gC.textura,0,0);
 			//Como he cambiado en controller y he indicado q pinte el cubo
 			gC.cube.draw(batch);
+			gC.platStatic1.draw(batch);
+			gC.platStatic2.draw(batch);
 		batch.end();
 		
 		

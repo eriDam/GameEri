@@ -9,26 +9,33 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 	//Creo esta 1 clase q va a ser la encargada de control, toda la parte logica del juego
-	public class GameEriController extends InputAdapter { //LE indico con extends qeu herede de InputAdapter (habrá q importar)
+	
+	public class GameEriController extends InputAdapter { //Le indico con extends q herede de InputAdapter (habrá q importar)
 		//Un mapa de puntos representa una imagen en la memoria.
 		//Tiene una anchura y altura expresada en píxeles
 		private Pixmap plataforma;
 		//creamos la textura y la hago public
-		public Texture textura;
+		public Texture textura,textura2,textura3;//Creo mas texturas para dibujar, asi veremos el efecto de nuestro cubo al moverse
 		//El Sprite nos permite incorporar movimiento y hacer ocsas que una textura no nos permite hacer
-		public Sprite cube;
-		
+		public Sprite cube,platStatic1,platStatic2;//añado como ejemplo 
+		public GameEriCamera gcCamera;//Creamos un nuevo 
 	
 	public GameEriController() {
 		init();
-		//Quien va a recibir los eventos de los teclados, le decimos this para q sea esta misma clase la que vaya a recibir y tratar esos eventos
-		Gdx.input.setInputProcessor(this);
+		
 	}
 
 	//nuevo metodo q podre usar para resetear el anterior
 	public void init(){
 		this.initPlataformas();//cuando utilizo this es para indicarle q utilizo todos los atributos y metodos de esta clase
-	}
+		//Creamos el objeto despues del cubo
+		gcCamera= new GameEriCamera();//y nos vamos a GameEriCamera
+		//Le pasamos el objeto creado en GameEriCamera
+		gcCamera.setSprite(cube);
+		
+		//Quien va a recibir los eventos de los teclados, le decimos this para q sea esta misma clase la que vaya a recibir y tratar esos eventos
+		Gdx.input.setInputProcessor(this);
+		}
 	
 	//--------------Metodo encargado de las actualizaciones del juego--------------------------------
 	
@@ -40,6 +47,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 		//System.out.println(deltaTime);
 		//Creo un nuevo metodo para
 		hdlControls(deltaTime);
+		gcCamera.update();//colocamos que se actualice, nos va a dar error por que hay que crear el metodo en la clase GEriCamera
+		
 	}
 	
 	/*-------------------Creamos para ordenar el codigo--------------------
@@ -55,14 +64,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 				plataforma.setColor(0,1,1,1);//le doy otro color
 				plataforma.drawRectangle(0,0,32,32);
 				
-		//-- Cargar textura------necesitamos ponerlo en memoria vamos a pintar a traves de una textura 
+		
+				
+				//-- Cargar textura------necesitamos ponerlo en memoria vamos a pintar a traves de una textura 
 				//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
 				textura=new Texture(plataforma);
 				//vamos a cargar dentro de nuestro cubo la textura y lo vamos a posicionar
 				cube=new Sprite(textura);//Ir a Renderer y cambiar que ya no este pintando la textura si no el cubo
 				cube.setPosition(0, 0);//
 				plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
-				//sprite=new Sprite();//utilizare el escenario batch para q dibuje el texture
+				//sprite=new Sprite(textura);//utilizare el escenario batch para q dibuje el texture
+				
+				//Llamamos al método creado 
+				createPixmapsDebug();
 	}
 	
 	//Creo un nuevo metodo para capturar apretar teclas
@@ -97,15 +111,58 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 		//En el vamos a mover el cubo a partir del método q nos proporciona sprite que se llama translate
 		//Que se mueva una cantidad x hacia x y en y
 		cube.translate(xAmount, yAmount);}*/
+
+	
+	//Creo un metodo de forma temporal para probar
+	private void createPixmapsDebug()
+	{	  
+					//Crear nuestra plataforma------------------
+					plataforma=new Pixmap (32, 32, Format.RGBA8888 );
+					plataforma.setColor(0.8f, 0.8f, 0.8f, 1f);
+					plataforma.fill();//Rellenar por completo la plataforma
+					plataforma.setColor(1,1,0,1);
+					plataforma.drawRectangle(0,0,32,32);
+					
+			
+					
+					//-- Cargar textura------necesitamos ponerlo en memoria vamos a pintar a traves de una textura 
+					//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
+					textura2=new Texture(plataforma);
+					platStatic1=new Sprite (textura2);
+					//vamos a cargar dentro de nuestro cubo la textura y lo vamos a posicionar
+					 
+					platStatic1.setPosition(-100, 0);//colocamos a la izquierda
+					plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
+					
+					//2estatico
+					//Crear nuestra plataforma------------------
+					plataforma=new Pixmap (32, 32, Format.RGBA8888 );
+					plataforma.setColor(0.8f, 0.8f, 0.8f, 1f);
+					plataforma.fill();//Rellenar por completo la plataforma
+					plataforma.setColor(1,1,0,1);
+					plataforma.drawRectangle(0,0,32,32);
+					
+			
+					
+					//-- Cargar textura------necesitamos ponerlo en memoria vamos a pintar a traves de una textura 
+					//entre parentesis cargariamos nuestra imagen del fichero pero vamos a cargar la plataforma d momento
+					textura3=new Texture(plataforma);
+					platStatic2=new Sprite (textura2);
+					//vamos a cargar dentro de nuestro cubo la textura y lo vamos a posicionar
+					 
+					platStatic2.setPosition(100, 40);//colocamos a la izquierda
+					plataforma.dispose();//para que elimine de memoria el pixmap una vez pintado
+	}
+	
 	
 	@Override //estamos sobreescribiendo el metodo que nos proporciona la clase padre que es inputAdapter
 	public boolean keyUp (int keycode){
 		//Reiniciamos el juego cuando se presione la tecla escape
 		
-		if(keycode==Keys.ESCAPE)
+		if(keycode==Keys.ESCAPE|keycode==Keys.SPACE)
 		{
 			//llamamos al metodo init
-			this.init();
+			this.init();//si da error es por que el metodo necesita retornar un valor, colocamos el return bajo
 		}
 		return true;
 	}
